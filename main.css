@@ -66,7 +66,7 @@ body {
 .cipher-section {
     background: #fff;
     margin: 2em 0;
-    padding: 2.5em;
+    padding: 2em;
     border-radius: 12px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
     transition: transform 0.2s, box-shadow 0.2s;
@@ -79,7 +79,7 @@ body {
 
     .cipher-section h2 {
         margin-bottom: 1.5em;
-        font-size: 2em;
+        font-size: 1.8em;
         color: #004d99;
         text-align: center;
         border-bottom: 2px solid #004d99;
@@ -118,6 +118,7 @@ body {
     display: flex;
     gap: 1em;
     justify-content: center;
+    flex-wrap: wrap;
 }
 
     .buttons .encrypt-btn,
@@ -166,13 +167,59 @@ body {
         gap: 0.5em;
     }
 
+    .navbar .logo {
+        font-size: 1.5em;
+    }
+
+    .cipher-section {
+        margin: 1.5em 0;
+        padding: 1.5em;
+    }
+
+        .cipher-section h2 {
+            font-size: 1.5em;
+        }
+
     .cipher-box textarea,
     .cipher-box input {
         width: 100%;
+        font-size: 0.9em;
     }
 
-    .buttons {
-        flex-direction: column;
-        gap: 1em;
+    .buttons .encrypt-btn,
+    .buttons .decrypt-btn {
+        padding: 0.6em 1.5em;
+        font-size: 1em;
+    }
+}
+
+@media (max-width: 480px) {
+    .navbar .nav-links {
+        gap: 0.3em;
+    }
+
+    .navbar .logo {
+        font-size: 1.2em;
+    }
+
+    .cipher-section {
+        margin: 1em 0;
+        padding: 1em;
+    }
+
+        .cipher-section h2 {
+            font-size: 1.2em;
+        }
+
+    .cipher-box textarea,
+    .cipher-box input {
+        font-size: 0.8em;
+        padding: 0.8em;
+    }
+
+    .buttons .encrypt-btn,
+    .buttons .decrypt-btn {
+        padding: 0.5em 1em;
+        font-size: 0.9em;
     }
 }
