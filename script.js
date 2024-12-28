@@ -324,6 +324,155 @@ function columnarTranspositionDecrypt(text, key) {
     return result;
 }
 
+
+function elGamalDecrypt(ciphertext, key) {
+    const [p, x] = key.split(' ').map(Number); // Assuming x is the private key
+
+    return ciphertext.split(' ').map(pair => {
+        const [c1, c2] = pair.split(',').map(Number);
+        const s = Math.pow(c1, x) % p;
+        const m = (c2 * Math.pow(s, p - 2)) % p; // Modular multiplicative inverse
+        return String.fromCharCode(m);
+    }).join('');
+}
+
+// Simplified DES (S-DES)
+function sdesEncrypt(text, key) {
+    const permute = (input, table) => table.map(i => input[i - 1]).join('');
+
+    const IP = [2, 6, 3, 1, 4, 8, 5, 7]; // Initial Permutation
+    const IP_INV = [4, 1, 3, 5, 7, 2, 8, 6]; // Inverse Initial Permutation
+    const EP = [4, 1, 2, 3, 2, 3, 4, 1]; // Expansion Permutation
+    const P4 = [2, 4, 3, 1]; // P4 Permutation
+
+    const S0 = [
+        [1, 0, 3, 2],
+        [3, 2, 1, 0],
+        [0, 2, 1, 3],
+        [3, 1, 3, 2]
+    ];
+
+    const S1 = [
+        [0, 1, 2, 3],
+        [2, 0, 1, 3],
+        [3, 0, 1, 0],
+        [2, 1, 0, 3]
+    ];
+
+    const XOR = (a, b) => a.split('').map((bit, i) => bit ^ b[i]).join('');
+
+    const f = (rightHalf, subkey) => {
+        const expanded = permute(rightHalf, EP);
+        const xored = XOR(expanded, subkey);
+
+        const sbox = (input, box) => {
+            const row = parseInt(input[0] + input[3], 2);
+            const col = parseInt(input[1] + input[2], 2);
+            return box[row][col].toString(2).padStart(2, '0');
+        };
+
+        const left = sbox(xored.slice(0, 4), S0);
+        const right = sbox(xored.slice(4), S1);
+
+        return permute(left + right, P4);
+    };
+
+    const generateSubkeys = (key) => {
+        const P10 = [3, 5, 2, 7, 4, 10, 1, 9, 8, 6]; // P10 Permutation
+        const P8 = [6, 3, 7, 4, 8, 5, 10, 9]; // P8 Permutation
+
+        const shifted = (bits, shift) => bits.slice(shift) + bits.slice(0, shift);
+
+        const permutedKey = permute(key, P10);
+        const left = shifted(permutedKey.slice(0, 5), 1);
+        const right = shifted(permutedKey.slice(5), 1);
+
+        const subkey1 = permute(left + right, P8);
+        const subkey2 = permute(shifted(left, 2) + shifted(right, 2), P8);
+
+        return [subkey1, subkey2];
+    };
+
+    const subkeys = generateSubkeys(key);
+    const permutedText = permute(text, IP);
+
+    const left = permutedText.slice(0, 4);
+    const right = permutedText.slice(4);
+
+    const round1 = XOR(left, f(right, subkeys[0]));
+    const round2 = XOR(right, f(round1, subkeys[1]));
+
+    return permute(round2 + round1, IP_INV);
+}
+
+function sdesDecrypt(text, key) {
+    const permute = (input, table) => table.map(i => input[i - 1]).join('');
+
+    const IP = [2, 6, 3, 1, 4, 8, 5, 7]; // Initial Permutation
+    const IP_INV = [4, 1, 3, 5, 7, 2, 8, 6]; // Inverse Initial Permutation
+    const EP = [4, 1, 2, 3, 2, 3, 4, 1]; // Expansion Permutation
+    const P4 = [2, 4, 3, 1]; // P4 Permutation
+
+    const S0 = [
+        [1, 0, 3, 2],
+        [3, 2, 1, 0],
+        [0, 2, 1, 3],
+        [3, 1, 3, 2]
+    ];
+
+    const S1 = [
+        [0, 1, 2, 3],
+        [2, 0, 1, 3],
+        [3, 0, 1, 0],
+        [2, 1, 0, 3]
+    ];
+
+    const XOR = (a, b) => a.split('').map((bit, i) => bit ^ b[i]).join('');
+
+    const f = (rightHalf, subkey) => {
+        const expanded = permute(rightHalf, EP);
+        const xored = XOR(expanded, subkey);
+
+        const sbox = (input, box) => {
+            const row = parseInt(input[0] + input[3], 2);
+            const col = parseInt(input[1] + input[2], 2);
+            return box[row][col].toString(2).padStart(2, '0');
+        };
+
+        const left = sbox(xored.slice(0, 4), S0);
+        const right = sbox(xored.slice(4), S1);
+
+        return permute(left + right, P4);
+    };
+
+    const generateSubkeys = (key) => {
+        const P10 = [3, 5, 2, 7, 4, 10, 1, 9, 8, 6]; // P10 Permutation
+        const P8 = [6, 3, 7, 4, 8, 5, 10, 9]; // P8 Permutation
+
+        const shifted = (bits, shift) => bits.slice(shift) + bits.slice(0, shift);
+
+        const permutedKey = permute(key, P10);
+        const left = shifted(permutedKey.slice(0, 5), 1);
+        const right = shifted(permutedKey.slice(5), 1);
+
+        const subkey1 = permute(left + right, P8);
+        const subkey2 = permute(shifted(left, 2) + shifted(right, 2), P8);
+
+        return [subkey2, subkey1]; // Reversed for decryption
+    };
+
+    const subkeys = generateSubkeys(key);
+    const permutedText = permute(text, IP);
+
+    const left = permutedText.slice(0, 4);
+    const right = permutedText.slice(4);
+
+    const round1 = XOR(left, f(right, subkeys[0]));
+    const round2 = XOR(right, f(round1, subkeys[1]));
+
+    return permute(round2 + round1, IP_INV);
+}
+
 // Add event listeners to buttons
 function addEventListeners() {
     const sections = document.querySelectorAll('.cipher-section');
@@ -436,107 +585,6 @@ function addEventListeners() {
         });
     });
 }
-
-// ElGamal Cipher
-function elGamalEncrypt(text, key) {
-    const [p, g] = key.split(' ').map(Number);
-    const y = Math.pow(g, 5) % p; // Assuming a fixed private key 5 for demonstration
-
-    return text.split('').map(char => {
-        const m = char.charCodeAt(0);
-        const k = Math.floor(Math.random() * (p - 2)) + 1; // Random session key
-        const c1 = Math.pow(g, k) % p;
-        const c2 = (m * Math.pow(y, k)) % p;
-        return `${c1},${c2}`;
-    }).join(' ');
-}
-
-function elGamalDecrypt(ciphertext, key) {
-    const [p, x] = key.split(' ').map(Number); // Assuming x is the private key
-
-    return ciphertext.split(' ').map(pair => {
-        const [c1, c2] = pair.split(',').map(Number);
-        const s = Math.pow(c1, x) % p;
-        const m = (c2 * Math.pow(s, p - 2)) % p; // Modular multiplicative inverse
-        return String.fromCharCode(m);
-    }).join('');
-}
-
-// Simplified DES (S-DES)
-function sdesEncrypt(text, key) {
-    const permute = (input, table) => table.map(i => input[i - 1]).join('');
-
-    const IP = [2, 6, 3, 1, 4, 8, 5, 7]; // Initial Permutation
-    const IP_INV = [4, 1, 3, 5, 7, 2, 8, 6]; // Inverse Initial Permutation
-    const EP = [4, 1, 2, 3, 2, 3, 4, 1]; // Expansion Permutation
-    const P4 = [2, 4, 3, 1]; // P4 Permutation
-
-    const S0 = [
-        [1, 0, 3, 2],
-        [3, 2, 1, 0],
-        [0, 2, 1, 3],
-        [3, 1, 3, 2]
-    ];
-
-    const S1 = [
-        [0, 1, 2, 3],
-        [2, 0, 1, 3],
-        [3, 0, 1, 0],
-        [2, 1, 0, 3]
-    ];
-
-    const XOR = (a, b) => a.split('').map((bit, i) => bit ^ b[i]).join('');
-
-    const f = (right, subkey) => {
-        const expanded = permute(right, EP);
-        const xored = XOR(expanded, subkey);
-
-        const sbox = (input, box) => {
-            const row = parseInt(input[0] + input[3], 2);
-            const col = parseInt(input[1] + input[2], 2);
-            return box[row][col].toString(2).padStart(2, '0');
-        };
-
-        const left = sbox(xored.slice(0, 4), S0);
-        const right = sbox(xored.slice(4), S1);
-
-        return permute(left + right, P4);
-    };
-
-    const generateSubkeys = (key) => {
-        const P10 = [3, 5, 2, 7, 4, 10, 1, 9, 8, 6]; // P10 Permutation
-        const P8 = [6, 3, 7, 4, 8, 5, 10, 9]; // P8 Permutation
-
-        const shifted = (bits, shift) => bits.slice(shift) + bits.slice(0, shift);
-
-        const permutedKey = permute(key, P10);
-        const left = shifted(permutedKey.slice(0, 5), 1);
-        const right = shifted(permutedKey.slice(5), 1);
-
-        const subkey1 = permute(left + right, P8);
-        const subkey2 = permute(shifted(left, 2) + shifted(right, 2), P8);
-
-        return [subkey1, subkey2];
-    };
-
-    const subkeys = generateSubkeys(key);
-    const permutedText = permute(text, IP);
-
-    const left = permutedText.slice(0, 4);
-    const right = permutedText.slice(4);
-
-    const round1 = XOR(left, f(right, subkeys[0]));
-    const round2 = XOR(right, f(round1, subkeys[1]));
-
-    return permute(round2 + round1, IP_INV);
-}
-
-function sdesDecrypt(text, key) {
-    return sdesEncrypt(text, key); // Encryption and decryption use reversed keys
-}
-
-// Initialize event listeners on page load
-document.addEventListener('DOMContentLoaded', addEventListeners);
 
 // Initialize event listeners on page load
 document.addEventListener('DOMContentLoaded', addEventListeners);
