@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Encryption Algorithms</title>
+    <link rel="stylesheet" href="main.css">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="container">
+            <h1 class="logo">Encryptify</h1>
+            <ul class="nav-links">
+                <li><a href="#caesar">Caesar</a></li>
+                <li><a href="#vernam">Vernam</a></li>
+                <li><a href="#vigenere">Vigenere</a></li>
+                <li><a href="#monoalphabetic">Monoalphabetic</a></li>
+                <li><a href="#polyalphabetic">Polyalphabetic</a></li>
+                <li><a href="#autokey">Autokey</a></li>
+            </ul>
+            <ul class="nav-links">
+                <li><a href="#hill">Hill</a></li>
+                <li><a href="#playfair">Playfair</a></li>
+                <li><a href="#railfence">Rail Fence</a></li>
+                <li><a href="#columnar">Columnar Transposition</a></li>
+                <li><a href="#elgamal">ElGamal</a></li>
+                <li><a href="#sdes">S-DES Encryption</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Algorithm Sections -->
+    <main class="container">
+        <!-- Caesar Cipher -->
+        <section id="caesar" class="cipher-section">
+            <h2>Caesar Cipher</h2>
+            <div class="example">
+                <p><strong>Example:</strong></p>
+                <p>Input: "HELLO"</p>
+                <p>Key: 3</p>
+                <p>Encrypted: "KHOOR"</p>
+                <p>Decrypted: "HELLO"</p>
+            </div>
+            <div class="cipher-box">
+                <textarea class="input-text" placeholder="Enter text here..."></textarea>
+                <input type="number" class="key-input" placeholder="Enter key (shift)...">
+                <div class="buttons">
+                    <button class="encrypt-btn">Encrypt</button>
+                    <button class="decrypt-btn">Decrypt</button>
+                </div>
+                <textarea class="output-text" placeholder="Output will appear here..." readonly></textarea>
+            </div>
+        </section>
+
+        <!-- Vernam Cipher -->
+        <section id="vernam" class="cipher-section">
+            <h2>Vernam Cipher</h2>
+            <div class="example">
+                <p><strong>Example:</strong></p>
+                <p>Input: "HELLO"</p>
+                <p>Key: "XMCKL"</p>
+                <p>Encrypted: Non-printable</p>
+                <p>Decrypted: "HELLO"</p>
+            </div>
+            <div class="cipher-box">
+                <textarea class="input-text" placeholder="Enter text here..."></textarea>
+                <input type="text" class="key-input" placeholder="Enter key...">
+                <div class="buttons">
+                    <button class="encrypt-btn">Encrypt</button>
+                    <button class="decrypt-btn">Decrypt</button>
+                </div>
+                <textarea class="output-text" placeholder="Output will appear here..." readonly></textarea>
+            </div>
+        </section>
+
+        <!-- Vigenere Cipher -->
+        <section id="vigenere" class="cipher-section">
+            <h2>Vigenere Cipher</h2>
+            <div class="example">
+                <p><strong>Example:</strong></p>
+                <p>Input: "HELLO"</p>
+                <p>Key: "KEY"</p>
+                <p>Encrypted: "RIJVS"</p>
+                <p>Decrypted: "HELLO"</p>
+            </div>
+            <div class="cipher-box">
+                <textarea class="input-text" placeholder="Enter text here..."></textarea>
+                <input type="text" class="key-input" placeholder="Enter key...">
+                <div class="buttons">
+                    <button class="encrypt-btn">Encrypt</button>
+                    <button class="decrypt-btn">Decrypt</button>
+                </div>
+                <textarea class="output-text" placeholder="Output will appear here..." readonly></textarea>
+            </div>
+        </section>
+
+        <!-- Monoalphabetic Cipher -->
+        <section id="monoalphabetic" class="cipher-section">
+            <h2>Monoalphabetic Cipher</h2>
+            <div class="example">
+                <p><strong>Example:</strong></p>
+                <p>Input: "HELLO"</p>
+                <p>Key: "ZNGRPSULVWFYECDABIKMOTQXJH"</p>
+                <p>Encrypted: "LPYYD"</p>
+                <p>Decrypted: "HELLO"</p>
+            </div>
+            <div class="cipher-box">
+                <textarea class="input-text" placeholder="Enter text here..."></textarea>
+                <input type="text" class="key-input" placeholder="Enter custom alphabet...">
+                <div class="buttons">
+                    <button class="encrypt-btn">Encrypt</button>
+                    <button class="decrypt-btn">Decrypt</button>
+                </div>
+                <textarea class="output-text" placeholder="Output will appear here..." readonly></textarea>
+            </div>
+        </section>
+
+        <!-- Polyalphabetic Cipher -->
+        <section id="polyalphabetic" class="cipher-section">
+            <h2>Polyalphabetic Cipher</h2>
+            <div class="example">
+                <p><strong>Example:</strong></p>
+                <p>Input: "HELLO"</p>
+                <p>Key: "KEY"</p>
+                <p>Encrypted: "RIJVS"</p>
+                <p>Decrypted: "HELLO"</p>
+            </div>
+            <div class="cipher-box">
+                <textarea class="input-text" placeholder="Enter text here..."></textarea>
+                <input type="text" class="key-input" placeholder="Enter key...">
+                <div class="buttons">
+                    <button class="encrypt-btn">Encrypt</button>
+                    <button class="decrypt-btn">Decrypt</button>
+                </div>
+                <textarea class="output-text" placeholder="Output will appear here..." readonly></textarea>
+            </div>
+        </section>
+
+        <!-- Autokey Cipher -->
+        <section id="autokey" class="cipher-section">
+            <h2>Autokey Cipher</h2>
+            <div class="example">
+                <p><strong>Example:</strong></p>
+                <p>Input: "HELLO"</p>
+                <p>Key: "N"</p>
+                <p>Encrypted: "ULPWZ"</p>
+                <p>Decrypted: "HELLO"</p>
+            </div>
+            <div class="cipher-box">
+                <textarea class="input-text" placeholder="Enter text here..."></textarea>
+                <input type="text" class="key-input" placeholder="Enter key...">
+                <div class="buttons">
+                    <button class="encrypt-btn">Encrypt</button>
+                    <button class="decrypt-btn">Decrypt</button>
+                </div>
+                <textarea class="output-text" placeholder="Output will appear here..." readonly></textarea>
+            </div>
+        </section>
+
+        <!-- Hill Cipher -->
+        <section id="hill" class="cipher-section">
+            <h2>Hill Cipher</h2>
+            <div class="example">
+                <p><strong>Example:</strong></p>
+                <p>Input: "ACT"</p>
+                <p>Key: "3 3 2 5"</p>
+                <p>Encrypted: "POH"</p>
+                <p>Decrypted: "ACT"</p>
+            </div>
+            <div class="cipher-box">
+                <textarea class="input-text" placeholder="Enter text here..."></textarea>
+                <input type="text" class="key-input" placeholder="Enter key matrix...">
+                <div class="buttons">
+                    <button class="encrypt-btn">Encrypt</button>
+                    <button class="decrypt-btn">Decrypt</button>
+                </div>
+                <textarea class="output-text" placeholder="Output will appear here..." readonly></textarea>
+            </div>
+        </section>
+
+        <!-- Playfair Cipher -->
+        <section id="playfair" class="cipher-section">
+            <h2>Playfair Cipher</h2>
+            <div class="example">
+                <p><strong>Example:</strong></p>
+                <p>Input: "HELLO"</p>
+                <p>Key: "MONARCHY"</p>
+                <p>Encrypted: "GATLMZ"</p>
+                <p>Decrypted: "HELLO"</p>
+            </div>
+            <div class="cipher-box">
+                <textarea class="input-text" placeholder="Enter text here..."></textarea>
+                <input type="text" class="key-input" placeholder="Enter key...">
+                <div class="buttons">
+                    <button class="encrypt-btn">Encrypt</button>
+                    <button class="decrypt-btn">Decrypt</button>
+                </div>
+                <textarea class="output-text" placeholder="Output will appear here..." readonly></textarea>
+            </div>
+        </section>
+
+        <!-- Rail Fence Cipher -->
+        <section id="railfence" class="cipher-section">
+            <h2>Rail Fence Cipher</h2>
+            <div class="example">
+                <p><strong>Example:</strong></p>
+                <p>Input: "HELLO"</p>
+                <p>Key: 3</p>
+                <p>Encrypted: "HOLEL"</p>
+                <p>Decrypted: "HELLO"</p>
+            </div>
+            <div class="cipher-box">
+                <textarea class="input-text" placeholder="Enter text here..."></textarea>
+                <input type="number" class="key-input" placeholder="Enter number of rails...">
+                <div class="buttons">
+                    <button class="encrypt-btn">Encrypt</button>
+                    <button class="decrypt-btn">Decrypt</button>
+                </div>
+                <textarea class="output-text" placeholder="Output will appear here..." readonly></textarea>
+            </div>
+        </section>
+
+        <!-- Columnar Transposition Cipher -->
+        <section id="columnar" class="cipher-section">
+            <h2>Columnar Transposition Cipher</h2>
+            <div class="example">
+                <p><strong>Example:</strong></p>
+                <p>Input: "HELLO"</p>
+                <p>Key: "3142"</p>
+                <p>Encrypted: "EHLOL"</p>
+                <p>Decrypted: "HELLO"</p>
+            </div>
+            <div class="cipher-box">
+                <textarea class="input-text" placeholder="Enter text here..."></textarea>
+                <input type="text" class="key-input" placeholder="Enter key...">
+                <div class="buttons">
+                    <button class="encrypt-btn">Encrypt</button>
+                    <button class="decrypt-btn">Decrypt</button>
+                </div>
+                <textarea class="output-text" placeholder="Output will appear here..." readonly></textarea>
+            </div>
+        </section>
+
+        <!-- ElGamal Cipher -->
+        <section id="elgamal" class="cipher-section">
+            <h2>ElGamal Cipher</h2>
+            <div class="example">
+                <p><strong>Example:</strong></p>
+                <p>Input: "HELLO"</p>
+                <p>Key: Public/Private Keys</p>
+                <p>Encrypted: Numeric Ciphertext</p>
+                <p>Decrypted: "HELLO"</p>
+            </div>
+            <div class="cipher-box">
+                <textarea class="input-text" placeholder="Enter text here..."></textarea>
+                <input type="text" class="key-input" placeholder="Enter key...">
+                <div class="buttons">
+                    <button class="encrypt-btn">Encrypt</button>
+                    <button class="decrypt-btn">Decrypt</button>
+                </div>
+                <textarea class="output-text" placeholder="Output will appear here..." readonly></textarea>
+            </div>
+        </section>
+
+        <!-- Simplified DES (S-DES) -->
+        <section id="sdes" class="cipher-section">
+            <h2>Simplified DES (S-DES)</h2>
+            <div class="example">
+                <p><strong>Example:</strong></p>
+                <p>Input: "10110101"</p>
+                <p>Key: "1010101010"</p>
+                <p>Encrypted: "Encrypted Binary"</p>
+                <p>Decrypted: "10110101"</p>
+            </div>
+            <div class="cipher-box">
+                <textarea class="input-text" placeholder="Enter binary text here..."></textarea>
+                <input type="text" class="key-input" placeholder="Enter binary key...">
+                <div class="buttons">
+                    <button class="encrypt-btn">Encrypt</button>
+                    <button class="decrypt-btn">Decrypt</button>
+                </div>
+                <textarea class="output-text" placeholder="Output will appear here..." readonly></textarea>
+            </div>
+        </section>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
